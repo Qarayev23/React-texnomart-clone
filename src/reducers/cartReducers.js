@@ -1,4 +1,4 @@
-import { ADD_TO_CART, INCREASE, DECREASE, REMOVE } from "../actions/types";
+import { ADD_TO_CART, INCREASE, DECREASE, REMOVE, CLEAR_CART } from "../actions/types";
 
 const cartItems = localStorage.getItem("cartItems")
     ? JSON.parse(localStorage.getItem("cartItems"))
@@ -41,6 +41,11 @@ export default function (state = init, action) {
         case REMOVE:
             return {
                 cart: cart.filter((item) => item.id !== action.payload),
+            }
+
+        case CLEAR_CART:
+            return {
+                cart: [],
             }
 
         default:

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { increase, decrease, remove } from '../actions/cartActions'
+import { increase, decrease, remove, clearBaket } from '../actions/cartActions'
 
 const Basket = () => {
     const cart = useSelector(state => state.cart.cart)
@@ -88,7 +88,7 @@ const Basket = () => {
                                     Mağazaya keç
                         </Link>
                         {cart.length > 0 ?
-                            <a href="" className="clean-cart">
+                            <a href="#" className="clean-cart" onClick={() => dispatch(clearBaket())}>
                                 Səbəti təmizlə
                                 </a>
                             : ""
