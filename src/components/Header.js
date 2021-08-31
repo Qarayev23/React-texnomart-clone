@@ -9,18 +9,6 @@ const Header = () => {
         return acc + element.count
     }, 0)
 
-    window.addEventListener("scroll", () => {
-        const navBar = document.querySelector("header");
-        const scrollHeight = window.pageYOffset;
-        const navHeight = navBar.getBoundingClientRect().height;
-
-        if (scrollHeight > navHeight) {
-            navBar.classList.add("fix-nav");
-        } else {
-            navBar.classList.remove("fix-nav");
-        }
-    });
-
     return (
         <header id="header">
             <div className="container">
