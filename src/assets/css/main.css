@@ -655,6 +655,7 @@ footer {
   border: 1px solid #7f7f7f;
   color: black;
   font-weight: bold;
+  background-color: transparent;
 }
 
 .pay-cart {
@@ -750,4 +751,46 @@ footer {
   .clean-cart {
     margin-top: 15px;
   }
+}
+
+/* PAGINATION */
+
+.page-numbers {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.page-numbers li {
+  font-weight: 600;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  transition: all 0.3s;
+  border: 0;
+  border-right: 1px solid #d3ced2;
+  padding: 0;
+  margin: 0;
+  float: left;
+  display: inline;
+  overflow: hidden;
+}
+
+.page-numbers li a {
+  display: inline-block;
+  margin: 0 2px;
+  padding: 0 5px;
+  min-width: 40px;
+  background: #f4f4f4;
+  color: #444;
+  text-decoration: none;
+  outline: none;
+  font-size: 14px;
+  line-height: 32px;
+  opacity: 0.6;
+  transition: all 0.3s;
+  border-radius: 3px;
+  position: relative;
 }

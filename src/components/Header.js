@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 const Header = () => {
-    const cart = useSelector(state => state.cart.cart)
+   const {cart} = useSelector(state => state.cartSlice)
 
     const totalQuantity = cart.reduce((acc, element) => {
         return acc + element.count

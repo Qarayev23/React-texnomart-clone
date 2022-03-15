@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { increase, decrease, remove, clearBaket } from '../actions/cartActions'
+import { increase, decrease, remove, clearBaket } from '../redux/features/cartSlice'
 
 const Basket = () => {
-    const cart = useSelector(state => state.cart.cart)
+    const { cart } = useSelector(state => state.cartSlice)
+    
     useEffect(() => {
         localStorage.setItem("cartItems", JSON.stringify(cart))
     }, [cart])
@@ -88,9 +89,9 @@ const Basket = () => {
                                     Mağazaya keç
                         </Link>
                         {cart.length > 0 ?
-                            <a href="#" className="clean-cart" onClick={() => dispatch(clearBaket())}>
+                            <button className="clean-cart" onClick={() => dispatch(clearBaket())}>
                                 Səbəti təmizlə
-                                </a>
+                                </button>
                             : ""
                         }
                     </div>

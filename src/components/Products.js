@@ -1,21 +1,28 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { fetchProducts } from '../actions/productActions'
-import { addToCart } from '../actions/cartActions'
 import { Link } from 'react-router-dom'
+import { getProducts } from '../redux/features/productSlice'
+import { addToCart } from '../redux/features/cartSlice'
+import Spinner from "../components/Spinner"
+import Pagination from './Pagination'
 
 const Products = () => {
-    const products = useSelector(state => state.products.items)
+    const { products, loading, } = useSelector(state => state.productSlice)
+    const { cart } = useSelector(state => state.cartSlice)
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(fetchProducts())
+        dispatch(getProducts())
     }, [])
 
-    const cart = useSelector(state => state.cart.cart)
     useEffect(() => {
         localStorage.setItem("cartItems", JSON.stringify(cart))
+        console.log(cart);
     }, [cart])
+
+    if (loading) {
+        return <Spinner />;
+    }
 
     return (
         <section className="products">
@@ -52,6 +59,7 @@ const Products = () => {
                         })}
                     </div>
                 </div>
+                <Pagination />
             </div>
         </section>
     )
