@@ -30,7 +30,6 @@ const productSlice = createSlice({
     },
     [getProducts.rejected]: (state, action) => {
       state.loading = false;
-      state.error = action.payload.message;
     },
   },
 });
