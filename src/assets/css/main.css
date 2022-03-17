@@ -756,8 +756,7 @@ footer {
 /* PAGINATION */
 
 .page-numbers {
-  display: inline-block;
-  margin: 0;
+  text-align: center;
   padding: 0;
   border: 0;
 }
@@ -765,17 +764,9 @@ footer {
 .page-numbers li {
   font-weight: 600;
   display: inline-block;
-  margin: 0;
-  padding: 0;
   text-align: center;
   transition: all 0.3s;
   border: 0;
-  border-right: 1px solid #d3ced2;
-  padding: 0;
-  margin: 0;
-  float: left;
-  display: inline;
-  overflow: hidden;
 }
 
 .page-numbers li a {

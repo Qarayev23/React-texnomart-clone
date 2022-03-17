@@ -2,7 +2,7 @@ import axios from "axios";
 
 const API = axios.create({ baseURL: "http://localhost:3004" });
 
-export const getProducts = () => API.get("/products");
+export const getProducts = (page, limit) => API.get(`/products?_page=${page}&_limit=${limit}`);
 
 // API.interceptors.request.use((req) => {
 //   if (localStorage.getItem("profile")) {

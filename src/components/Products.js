@@ -11,8 +11,11 @@ const Products = () => {
     const { cart } = useSelector(state => state.cartSlice)
     const dispatch = useDispatch()
 
+    const page = 1
+    const limit = 8
+
     useEffect(() => {
-        dispatch(getProducts())
+        dispatch(getProducts(page,limit))
     }, [])
 
     useEffect(() => {
