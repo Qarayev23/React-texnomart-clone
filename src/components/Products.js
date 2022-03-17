@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { getProducts } from '../redux/features/productSlice'
@@ -7,20 +7,25 @@ import Spinner from "../components/Spinner"
 import Pagination from './Pagination'
 
 const Products = () => {
-    const { products, loading, } = useSelector(state => state.productSlice)
+    const { products, loading } = useSelector(state => state.productSlice)
     const { cart } = useSelector(state => state.cartSlice)
     const dispatch = useDispatch()
 
-    const page = 1
-    const limit = 8
+    const [pageNumber, setPageNumber] = useState(0);
+    const usersPerPage = 8;
+    const pagesVisited = pageNumber * usersPerPage;
+    const pageCount = Math.ceil(products.length / usersPerPage);
+    const changePage = ({ selected }) => {
+      setPageNumber(selected);
+      window.scroll(0,0)
+    };
 
     useEffect(() => {
-        dispatch(getProducts(page,limit))
+        dispatch(getProducts())
     }, [])
 
     useEffect(() => {
         localStorage.setItem("cartItems", JSON.stringify(cart))
-        console.log(cart);
     }, [cart])
 
     if (loading) {
@@ -33,11 +38,13 @@ const Products = () => {
                 <div className="products-content">
                     <div className="filter-section">
                         <div className="products-found">
-                            <span>{products.length}</span> Məhsul tapıldı
+                            {products.length}&nbsp;nəticədən &nbsp;{pagesVisited}&nbsp;-&nbsp;
+                            {pagesVisited + products.slice(pagesVisited, pagesVisited + usersPerPage).length} 
+                             &nbsp;Məhsul tapıldı   
                         </div>
                     </div>
                     <div className="products-list">
-                        {products.map((product) => {
+                        {products.slice(pagesVisited, pagesVisited + usersPerPage).map((product) => {
                             const payment = (product.price / 12).toFixed(2)
 
                             return (
@@ -62,7 +69,7 @@ const Products = () => {
                         })}
                     </div>
                 </div>
-                <Pagination />
+                <Pagination changePage={changePage} pageCount={pageCount} />
             </div>
         </section>
     )

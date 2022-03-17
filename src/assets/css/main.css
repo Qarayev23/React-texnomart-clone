@@ -785,3 +785,13 @@ footer {
   border-radius: 3px;
   position: relative;
 }
+
+.page-numbers li.active a{
+  opacity: 1;
+  background-color:  var(--dark-red);
+  color: white;
+}
+
+.page-numbers li.disabled a{
+  color: rgba(0, 0, 0, 0.3);
+}

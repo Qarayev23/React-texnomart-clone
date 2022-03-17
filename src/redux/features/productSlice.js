@@ -3,7 +3,7 @@ import * as api from "../api";
 
 export const getProducts = createAsyncThunk(
   "product/getProducts",
-  async (_, { rejectWithValue }) => {
+  async (__, { rejectWithValue }) => {
     try {
       const response = await api.getProducts();
       return response.data;

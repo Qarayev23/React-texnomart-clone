@@ -1,13 +1,18 @@
 import React from 'react'
+import ReactPaginate from "react-paginate";
 
-const Pagination = () => {
+const Pagination = ({changePage, pageCount}) => {
     return (
-        <ul class="page-numbers">
-            <li><a class="prev page-numbers" href=""><i class="fa-solid fa-angle-left"></i></a></li>
-            <li><a class="page-numbers" href="">1</a></li>
-            <li><a class="page-numbers" href="">2</a></li>
-            <li><a class="next page-numbers" href=""><i class="fa-solid fa-angle-right"></i></a></li>
-        </ul>
+        <ReactPaginate
+            previousLabel={"<"}
+            nextLabel={">"}
+            pageCount={pageCount}
+            onPageChange={changePage}
+            containerClassName={"page-numbers"}
+            previousLinkClassName={"prev"}
+            nextLinkClassName={"next"}
+            activeClassName={"active"}
+        />
     )
 }
 

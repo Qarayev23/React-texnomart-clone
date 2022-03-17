@@ -98,6 +98,96 @@
       "memory": 128,
       "price": 849,
       "id": 10
+    },
+    {
+      "name": "Samsung Galaxy A01",
+      "brand": "samsung",
+      "img": "https://texnomart.az/wp-content/uploads/2020/11/Samsung-Galaxy-A01-Red-all-600x600.jpg",
+      "ram": 2,
+      "memory": 16,
+      "price": 239,
+      "id": 11
+    },
+    {
+      "name": "Samsung A12",
+      "brand": "samsung",
+      "img": "https://texnomart.az/wp-content/uploads/2021/02/Samsung-A12-32-GB-SM-A125-blue-all-600x600.jpg",
+      "ram": 3,
+      "memory": 32,
+      "price": 329,
+      "id": 12
+    },
+    {
+      "name": "Samsung Galaxy S21",
+      "brand": "samsung",
+      "img": "https://texnomart.az/wp-content/uploads/2021/02/Samsung-Galaxy-S21-SM-G991-Grey-all-600x600.jpg",
+      "ram": 8,
+      "memory": 128,
+      "price": 1899,
+      "id": 13
+    },
+    {
+      "name": "Samsung Galaxy Note 20",
+      "brand": "samsung",
+      "img": "https://texnomart.az/wp-content/uploads/2021/04/Samsung-Galaxy-Note-20-SM-N980-bronze-all-2-600x600.jpg",
+      "ram": 8,
+      "memory": 256,
+      "price": 1799,
+      "id": 14
+    },
+    {
+      "name": "Smartfon Samsung A52",
+      "brand": "samsung",
+      "img": "https://texnomart.az/wp-content/uploads/2021/04/Samsung-Galaxy-A52-DS-SM-A525-violet-all-600x600.jpg",
+      "ram": 4,
+      "memory": 128,
+      "price": 719,
+      "id": 15
+    },
+    {
+      "name": "Smartfon Samsung Galaxy A32",
+      "brand": "samsung",
+      "img": "https://texnomart.az/wp-content/uploads/2021/04/Samsung-Galaxy-A32-DS-SM-A325-64GB-Black-all-600x600.jpg",
+      "ram": 4,
+      "memory": 64,
+      "price": 539,
+      "id": 16
+    },
+    {
+      "name": "Xiaomi Redmi Note 9",
+      "brand": "xiaomi",
+      "img": "https://texnomart.az/wp-content/uploads/2020/12/Xiaomi-Redmi-Note-9-green-all-600x600.jpg",
+      "ram": 3,
+      "memory": 64,
+      "price": 429,
+      "id": 17
+    },
+    {
+      "name": "Xiaomi Redmi Note 9S",
+      "brand": "xiaomi",
+      "img": "https://texnomart.az/wp-content/uploads/2020/12/Xiaomi-Redmi-Note-9S-blue-all-600x600.jpg",
+      "ram": 4,
+      "memory": 64,
+      "price": 519,
+      "id": 18
+    },
+    {
+      "name": "Xiaomi Poco X3",
+      "brand": "xiaomi",
+      "img": "https://texnomart.az/wp-content/uploads/2021/02/Xiaomi-Poco-X3-128-GB-grey-all-1-600x600.jpg",
+      "ram": 6,
+      "memory": 128,
+      "price": 699,
+      "id": 19
+    },
+    {
+      "name": "Xiaomi POCO X3 Pro",
+      "brand": "xiaomi",
+      "img": "https://texnomart.az/wp-content/uploads/2021/02/Samsung-A12-32-GB-SM-A125-Gray-All-600x600.jpg",
+      "ram": 6,
+      "memory": 128,
+      "price": 849,
+      "id": 20
     }
   ]
 }
