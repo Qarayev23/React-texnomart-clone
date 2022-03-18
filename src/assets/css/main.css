@@ -17,6 +17,7 @@ header {
 
 .nav-logo {
   width: 20%;
+  display: flex;
 }
 
 .nav-logo img {
@@ -26,7 +27,8 @@ header {
 
 .nav-form {
   margin: 0 20px;
-  width: 35%;
+  max-width: 550px;
+  flex-grow: 1;
 }
 
 .nav-form form {
@@ -67,8 +69,9 @@ header {
   position: relative;
 }
 
-.nav-icons a:first-of-type {
-  margin-left: 0;
+.tel{
+  margin-left: 0 !important;
+  transform: translateY(2px);
 }
 
 .nav-icons a:last-of-type {
@@ -135,7 +138,7 @@ header {
 
   .nav-form {
     width: 100%;
-    margin: 0;
+    margin: auto;
     margin-top: 20px;
     order: 1;
   }
@@ -146,8 +149,12 @@ header {
 }
 
 @media (max-width: 767px) {
-  .nav-icons .tel {
-    display: none;
+  .nav-icons .tel span{
+    font-size: 20px;
+  }
+
+  .tel svg{
+    margin-right: 5px;
   }
 
   .log-in div {
@@ -767,6 +774,7 @@ footer {
   text-align: center;
   transition: all 0.3s;
   border: 0;
+  cursor: pointer;
 }
 
 .page-numbers li a {

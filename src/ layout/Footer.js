@@ -37,7 +37,7 @@ const Footer = () => {
                     </div>
                 </section>
 
-                <section className="footer-menu">
+                {/* <section className="footer-menu">
                     <div className="footer-menu-container">
                         <div className="footer-menu-list">
                             <h3>Şirkət</h3>
@@ -97,7 +97,7 @@ const Footer = () => {
                         </div>
                     </div>
 
-                </section>
+                </section> */}
 
                 <section className="footer-bottom">
                     <div className="footer-bottom-container">
