@@ -48,11 +48,11 @@ const Products = () => {
                             const payment = (product.price / 12).toFixed(2)
 
                             return (
-                                <Link to="" className="product" key={product.id}>
-                                    <div className="product-img">
+                                <div className="product" key={product.id}>
+                                    <Link to={`/products/${product.id}`} className="product-img">
                                         <img src={product.img} alt="" />
-                                    </div>
-                                    <h4 className="product-name">{product.name}</h4>
+                                    </Link>
+                                    <Link to={`/products/${product.id}`} className="product-name">{product.name}</Link>
                                     <div className="product-footer">
                                         <div className="product-price">
                                             <span className="small">Qiymət</span>
@@ -64,7 +64,7 @@ const Products = () => {
                                         </div>
                                     </div>
                                     <button onClick={() => dispatch(addToCart(product))}>Səbətə at</button>
-                                </Link>
+                                </div>
                             )
                         })}
                     </div>

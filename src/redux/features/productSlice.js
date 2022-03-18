@@ -13,10 +13,23 @@ export const getProducts = createAsyncThunk(
   }
 );
 
+export const getProduct = createAsyncThunk(
+  "product/getProduct",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await api.getProduct(id);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
 const productSlice = createSlice({
   name: "product",
   initialState: {
     products: [],
+    product: {},
     error: "",
     loading: false,
   },
@@ -29,6 +42,16 @@ const productSlice = createSlice({
       state.products = action.payload;
     },
     [getProducts.rejected]: (state, action) => {
+      state.loading = false;
+    },
+    [getProduct.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [getProduct.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.product = action.payload;
+    },
+    [getProduct.rejected]: (state, action) => {
       state.loading = false;
     },
   },
