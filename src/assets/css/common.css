@@ -6,9 +6,21 @@
   --dark-gray: #666;
 }
 
+html{
+  height: 100%; 
+}
+
 body {
   font-family: sans-serif;
   letter-spacing: 0.5px;
+  height: 100%;
+}
+
+#root{
+  height: 100%; 
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .container {

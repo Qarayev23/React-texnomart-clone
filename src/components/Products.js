@@ -45,8 +45,6 @@ const Products = () => {
                     </div>
                     <div className="products-list">
                         {products.slice(pagesVisited, pagesVisited + usersPerPage).map((product) => {
-                            const payment = (product.price / 12).toFixed(2)
-
                             return (
                                 <div className="product" key={product.id}>
                                     <Link to={`/products/${product.id}`} className="product-img">
@@ -60,7 +58,7 @@ const Products = () => {
                                         </div>
                                         <div className="product-payment">
                                             <span className="small">Hissə-hissə ödəniş</span>
-                                            <span>12ay <b>{payment}$</b></span>
+                                            <span>12ay <b>{(product.price / 12).toFixed(2)}$</b></span>
                                         </div>
                                     </div>
                                     <button onClick={() => dispatch(addToCart(product))}>Səbətə at</button>

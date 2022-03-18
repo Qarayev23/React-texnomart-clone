@@ -1,9 +1,19 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { getProductBySearch } from '../redux/features/productSlice'
 
 const Header = () => {
-   const {cart} = useSelector(state => state.cartSlice)
+    const { cart } = useSelector(state => state.cartSlice)
+    const { productBySearch, loading } = useSelector(state => state.productSlice)
+    const dispatch = useDispatch()
+
+    const [value, setValue] = useState("");
+
+    function handleSearch(event) {
+        setValue(event.target.value)
+        dispatch(getProductBySearch(value))
+    }
 
     const totalQuantity = cart.reduce((acc, element) => {
         return acc + element.count
@@ -16,9 +26,50 @@ const Header = () => {
                     <Link className="nav-logo" to="/"><img src={require('../assets/img/logo.png').default} alt="" /></Link>
                     <div className="nav-form">
                         <form action="">
-                            <input type="text" placeholder="Axtar..." />
+                            <input
+                                type="text"
+                                onChange={handleSearch}
+                                value={value}
+                                placeholder="Axtar..." />
                             <button type="submit">Axtar</button>
                         </form>
+                        <div className="search-results active">
+                            <ul>
+                                {productBySearch.map((product) => (
+                                    <li key={product.id}>
+                                        <Link to={`/products/${product.id}`} className="">
+                                            <div className="product-image">
+                                                <img className="front" src={product.img} />
+                                            </div>
+                                            <div className="product-data">
+                                                <h3>{product.name}</h3>
+                                                <div className="product-price-box">
+                                                    <span className="price">
+                                                        <span className="in-price">
+                                                            <span className="amount-title"><small>Qiymət</small></span>
+                                                            <span className="amount">
+                                                                <del>
+                                                                    <span className="amount">
+                                                                        <bdi>{product.price}&nbsp;$</bdi>
+                                                                    </span>
+                                                                </del>
+                                                            </span>
+                                                        </span>
+                                                        <span className="in-parts">
+                                                            <span className="amount-title"><small>Hissə-hissə ödəniş</small></span>
+                                                            <span className="amount">12 ay
+                                                                <strong>{(product.price / 12).toFixed(2)}</strong>
+                                                                <span className="aznb">$</span>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
                     </div>
                     <div className="nav-icons">
                         <a href="#" className="tel">
