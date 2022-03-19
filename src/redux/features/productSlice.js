@@ -6,6 +6,7 @@ export const getProducts = createAsyncThunk(
   async (__, { rejectWithValue }) => {
     try {
       const response = await api.getProducts();
+      console.log("work");
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response.data);
@@ -25,24 +26,11 @@ export const getProduct = createAsyncThunk(
   }
 );
 
-export const getProductBySearch = createAsyncThunk(
-  "product/getProductBySearch",
-  async (value, { rejectWithValue }) => {
-    try {
-      const response = await api.getProductBysearch(value);
-      return response.data;
-    } catch (err) {
-      return rejectWithValue(err.response.data);
-    }
-  }
-);
-
 const productSlice = createSlice({
   name: "product",
   initialState: {
     products: [],
     product: {},
-    productBySearch: [],
     error: "",
     loading: false,
   },
@@ -65,16 +53,6 @@ const productSlice = createSlice({
       state.product = action.payload;
     },
     [getProduct.rejected]: (state, action) => {
-      state.loading = false;
-    },
-    [getProductBySearch.pending]: (state, action) => {
-      state.loading = true;
-    },
-    [getProductBySearch.fulfilled]: (state, action) => {
-      state.loading = false;
-      state.productBySearch = action.payload;
-    },
-    [getProductBySearch.rejected]: (state, action) => {
       state.loading = false;
     },
   },

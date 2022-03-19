@@ -1,19 +1,34 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { getProductBySearch } from '../redux/features/productSlice'
+import { clearProductBySearch, getProductBySearch } from '../redux/features/searchSlice'
+import { DebounceInput } from 'react-debounce-input';
+import { useNavigate } from 'react-router-dom';
+import Spinner from "../components/Spinner"
 
 const Header = () => {
     const { cart } = useSelector(state => state.cartSlice)
-    const { productBySearch, loading } = useSelector(state => state.productSlice)
+    const { productBySearch, loading } = useSelector(state => state.searchSlice)
     const dispatch = useDispatch()
-
-    const [value, setValue] = useState("");
+    let navigate = useNavigate();
 
     function handleSearch(event) {
-        setValue(event.target.value)
-        dispatch(getProductBySearch(value))
+        const query = event.target.value
+        if (query.length > 2) {
+            dispatch(getProductBySearch(query))
+        } else if (query.length === 0) {
+            dispatch(clearProductBySearch())
+        }
     }
+
+    function submitSearch() {
+        const id = productBySearch[0].id
+        return navigate(`/products/${id}`);
+    }
+
+    useEffect(() => {
+        dispatch(clearProductBySearch())
+    }, [])
 
     const totalQuantity = cart.reduce((acc, element) => {
         return acc + element.count
@@ -25,49 +40,54 @@ const Header = () => {
                 <nav className="navbar">
                     <Link className="nav-logo" to="/"><img src={require('../assets/img/logo.png').default} alt="" /></Link>
                     <div className="nav-form">
-                        <form action="">
-                            <input
+                        <div className='search-holder'>
+                            <DebounceInput
                                 type="text"
                                 onChange={handleSearch}
-                                value={value}
+                                debounceTimeout={500}
                                 placeholder="Axtar..." />
-                            <button type="submit">Axtar</button>
-                        </form>
-                        <div className="search-results active">
+                            <button type="button" onClick={submitSearch}>Axtar</button>
+
+                            {loading ? <Spinner /> : ""}
+                        </div>
+                        <div className={"search-results"}>
                             <ul>
-                                {productBySearch.map((product) => (
-                                    <li key={product.id}>
-                                        <Link to={`/products/${product.id}`} className="">
-                                            <div className="product-image">
-                                                <img className="front" src={product.img} />
-                                            </div>
-                                            <div className="product-data">
-                                                <h3>{product.name}</h3>
-                                                <div className="product-price-box">
-                                                    <span className="price">
-                                                        <span className="in-price">
-                                                            <span className="amount-title"><small>Qiymət</small></span>
-                                                            <span className="amount">
-                                                                <del>
-                                                                    <span className="amount">
-                                                                        <bdi>{product.price}&nbsp;$</bdi>
-                                                                    </span>
-                                                                </del>
-                                                            </span>
-                                                        </span>
-                                                        <span className="in-parts">
-                                                            <span className="amount-title"><small>Hissə-hissə ödəniş</small></span>
-                                                            <span className="amount">12 ay
-                                                                <strong>{(product.price / 12).toFixed(2)}</strong>
-                                                                <span className="aznb">$</span>
-                                                            </span>
-                                                        </span>
-                                                    </span>
+                                {productBySearch.map((product) => {
+                                    return (
+                                        <li key={product.id}>
+                                            <Link to={`/products/${product.id}`} className="">
+                                                <div className="product-image">
+                                                    <img className="front" src={product.img} />
                                                 </div>
-                                            </div>
-                                        </Link>
-                                    </li>
-                                ))}
+                                                <div className="product-data">
+                                                    <h3>{product.name}</h3>
+                                                    <div className="product-price-box">
+                                                        <span className="price">
+                                                            <span className="in-price">
+                                                                <span className="amount-title"><small>Qiymət</small></span>
+                                                                <span className="amount">
+                                                                    <del>
+                                                                        <span className="amount">
+                                                                            <bdi>{product.price}&nbsp;$</bdi>
+                                                                        </span>
+                                                                    </del>
+                                                                </span>
+                                                            </span>
+                                                            <span className="in-parts">
+                                                                <span className="amount-title"><small>Hissə-hissə ödəniş</small></span>
+                                                                <span className="amount">12 ay
+                                                                    <strong>{(product.price / 12).toFixed(2)}</strong>
+                                                                    <span className="aznb">$</span>
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </Link>
+                                        </li>
+                                    )
+                                })
+                            }
                             </ul>
                         </div>
                     </div>

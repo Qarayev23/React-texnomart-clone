@@ -22,7 +22,7 @@ const Products = () => {
 
     useEffect(() => {
         dispatch(getProducts())
-    }, [])
+    }, [dispatch])
 
     useEffect(() => {
         localStorage.setItem("cartItems", JSON.stringify(cart))
