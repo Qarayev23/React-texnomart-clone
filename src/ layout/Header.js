@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { clearProductBySearch, getProductBySearch } from '../redux/features/searchSlice'
@@ -11,9 +11,10 @@ const Header = () => {
     const { productBySearch, loading } = useSelector(state => state.searchSlice)
     const dispatch = useDispatch()
     let navigate = useNavigate();
+    const [query, setQuery] = useState("")
 
     function handleSearch(event) {
-        const query = event.target.value
+        setQuery(event.target.value)
         if (query.length > 2) {
             dispatch(getProductBySearch(query))
         } else if (query.length === 0) {
@@ -23,12 +24,16 @@ const Header = () => {
 
     function submitSearch() {
         const id = productBySearch[0].id
+        dispatch(clearProductBySearch())
+        setQuery("")
         return navigate(`/products/${id}`);
     }
 
-    useEffect(() => {
+    function directedFunc(id) {
         dispatch(clearProductBySearch())
-    }, [])
+        setQuery("")
+        return navigate(`/products/${id}`);
+    }
 
     const totalQuantity = cart.reduce((acc, element) => {
         return acc + element.count
@@ -44,9 +49,10 @@ const Header = () => {
                             <DebounceInput
                                 type="text"
                                 onChange={handleSearch}
+                                value = {query}
                                 debounceTimeout={500}
                                 placeholder="Axtar..." />
-                            <button type="button" onClick={submitSearch}>Axtar</button>
+                            <button type="button" className='search-btn' onClick={submitSearch}>Axtar</button>
 
                             {loading ? <Spinner /> : ""}
                         </div>
@@ -55,7 +61,7 @@ const Header = () => {
                                 {productBySearch.map((product) => {
                                     return (
                                         <li key={product.id}>
-                                            <Link to={`/products/${product.id}`} className="">
+                                            <button className='directed-btn' onClick={() => directedFunc(product.id)}>
                                                 <div className="product-image">
                                                     <img className="front" src={product.img} />
                                                 </div>
@@ -83,7 +89,7 @@ const Header = () => {
                                                         </span>
                                                     </div>
                                                 </div>
-                                            </Link>
+                                            </button>
                                         </li>
                                     )
                                 })

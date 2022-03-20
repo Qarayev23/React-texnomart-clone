@@ -61,7 +61,7 @@ header {
   border: none;
 }
 
-.nav-form button {
+.nav-form .search-btn {
   height: 40px;
   line-height: 40px;
   width: 100px;
@@ -166,14 +166,17 @@ header {
   clear: both;
 }
 
-.search-results ul>li>a {
+.search-results .directed-btn {
   position: relative;
   display: block;
+  width: 100%;
+  text-align: left;
+  background-color: white;
   margin: 0;
   padding: 15px 0;
 }
 
-.search-results ul>li>a:after {
+.search-results .directed-btn:after {
   display: table;
   content: "";
   clear: both;
