@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom'
 import { increase, decrease, remove, clearBaket } from '../redux/features/cartSlice'
 
 const Basket = () => {
+    const dispatch = useDispatch()
+
     const { cart } = useSelector(state => state.cartSlice)
     
     useEffect(() => {
@@ -19,7 +21,6 @@ const Basket = () => {
         return acc + element.count
     }, 0)
 
-    const dispatch = useDispatch()
 
     return (
         <section className="cart-area">

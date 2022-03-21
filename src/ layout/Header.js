@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { clearProductBySearch, getProductBySearch } from '../redux/features/searchSlice'
@@ -15,12 +15,15 @@ const Header = () => {
 
     function handleSearch(event) {
         setQuery(event.target.value)
+    }
+
+    useEffect(() => {
         if (query.length > 2) {
             dispatch(getProductBySearch(query))
         } else if (query.length === 0) {
             dispatch(clearProductBySearch())
         }
-    }
+    }, [query])
 
     function submitSearch() {
         const id = productBySearch[0].id
@@ -49,15 +52,22 @@ const Header = () => {
                             <DebounceInput
                                 type="text"
                                 onChange={handleSearch}
-                                value = {query}
+                                value={query}
                                 debounceTimeout={500}
                                 placeholder="Axtar..." />
-                            <button type="button" className='search-btn' onClick={submitSearch}>Axtar</button>
+                            <button
+                                type="button"
+                                className='search-btn'
+                                onClick={submitSearch}>
+                                Axtar
+                            </button>
 
                             {loading ? <Spinner /> : ""}
                         </div>
-                        <div className={"search-results"}>
+                        <div className={query.length > 2 ? "search-results active" : "search-results"}>
                             <ul>
+                                {productBySearch.length === 0 && !loading ? <li className='no-result'>Məhsul tapılmadı.</li> : null}
+
                                 {productBySearch.map((product) => {
                                     return (
                                         <li key={product.id}>
@@ -93,7 +103,7 @@ const Header = () => {
                                         </li>
                                     )
                                 })
-                            }
+                                }
                             </ul>
                         </div>
                     </div>

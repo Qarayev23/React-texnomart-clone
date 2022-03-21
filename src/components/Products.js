@@ -17,7 +17,7 @@ const Products = () => {
     const pageCount = Math.ceil(products.length / usersPerPage);
     const changePage = ({ selected }) => {
       setPageNumber(selected);
-      window.scroll(0,0)
+      window.scrollTo({top: 0, behavior: 'smooth' })
     };
 
     useEffect(() => {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from "react-router-dom";
 import Spinner from '../components/Spinner';
@@ -13,15 +13,15 @@ const ProductDetail = () => {
   useEffect(() => {
     dispatch(getProduct(id))
     setTimeout(() => {
-      document.getElementById("month-active").click()
+      activeRef.current.click()
     }, 500);
   }, [id])
 
   const [monthlyPayment, setMonthlyPayment] = useState(0)
   const [active, setActive] = useState("");
+  const activeRef = useRef();
 
   function monthlyPaymentFunc(event, price, index) {
-    event.target.classList.remove("active")
     const month = event.target.getAttribute('data-value');
     const result = (price / month).toFixed(2)
     setMonthlyPayment(result)
@@ -54,7 +54,8 @@ const ProductDetail = () => {
                   <button onClick={(e) => monthlyPaymentFunc(e, product.price, 1)}
                     className={active === 1 ? "month active" : "month"}
                     data-value="6"
-                    id="month-active">
+                    id="month-active"
+                    ref={activeRef}>
                     6 ay
                   </button>
                   <button onClick={(e) => monthlyPaymentFunc(e, product.price, 2)}
