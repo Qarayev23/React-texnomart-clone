@@ -6,7 +6,18 @@ export const getProducts = createAsyncThunk(
   async (__, { rejectWithValue }) => {
     try {
       const response = await api.getProducts();
-      console.log("work");
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const filterByPrice = createAsyncThunk(
+  "product/filterByPrice",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const response = await api.filterByPrice(payload);
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response.data);
@@ -43,6 +54,16 @@ const productSlice = createSlice({
       state.products = action.payload;
     },
     [getProducts.rejected]: (state, action) => {
+      state.loading = false;
+    },
+    [filterByPrice.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [filterByPrice.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.products = action.payload;
+    },
+    [filterByPrice.rejected]: (state, action) => {
       state.loading = false;
     },
     [getProduct.pending]: (state, action) => {

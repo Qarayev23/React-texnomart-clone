@@ -594,6 +594,10 @@ header {
   .product-payment::before {
     display: none;
   }
+
+  .price-filter{
+    margin-top: 20px;
+  }
 }
 
 /* FOOTER */

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { getProducts } from '../redux/features/productSlice'
+import { filterByPrice, getProducts } from '../redux/features/productSlice'
 import { addToCart } from '../redux/features/cartSlice'
 import Spinner from "../components/Spinner"
 import Pagination from './Pagination'
+import Select from 'react-select'
 
 const Products = () => {
     const { products, loading } = useSelector(state => state.productSlice)
@@ -16,8 +17,8 @@ const Products = () => {
     const pagesVisited = pageNumber * usersPerPage;
     const pageCount = Math.ceil(products.length / usersPerPage);
     const changePage = ({ selected }) => {
-      setPageNumber(selected);
-      window.scrollTo({top: 0, behavior: 'smooth' })
+        setPageNumber(selected);
+        window.scrollTo({ top: 0, behavior: 'smooth' })
     };
 
     useEffect(() => {
@@ -27,6 +28,30 @@ const Products = () => {
     useEffect(() => {
         localStorage.setItem("cartItems", JSON.stringify(cart))
     }, [cart])
+
+
+    const options = [
+        { value: 'standart', label: 'Standart sıralama' },
+        { value: 'inc-price', label: 'Ucuzdan bahaya' },
+        { value: 'dec-price', label: 'Bahadan ucuza' }
+    ]
+
+    const [value, setValue] = useState({
+        value: "standart",
+        label: "Standart sıralama"
+    });
+
+    function filterByPriceFunc(selected) {
+        setValue(selected)
+        if (selected.value == "inc-price") {
+            dispatch(filterByPrice("asc"))
+        } else if (selected.value == "dec-price") {
+            dispatch(filterByPrice("desc"))
+        }
+        else if (selected.value == "standart") {
+            dispatch(getProducts())
+        }
+    }
 
     if (loading) {
         return <Spinner />;
@@ -39,8 +64,14 @@ const Products = () => {
                     <div className="filter-section">
                         <div className="products-found">
                             {products.length}&nbsp;nəticədən &nbsp;{pagesVisited}&nbsp;-&nbsp;
-                            {pagesVisited + products.slice(pagesVisited, pagesVisited + usersPerPage).length} 
-                             &nbsp;Məhsul tapıldı   
+                            {pagesVisited + products.slice(pagesVisited, pagesVisited + usersPerPage).length}
+                            &nbsp;Məhsul tapıldı
+                        </div>
+                        <div className='price-filter'>
+                            <Select
+                                value={value}
+                                options={options}
+                                onChange={filterByPriceFunc} />
                         </div>
                     </div>
                     <div className="products-list">
