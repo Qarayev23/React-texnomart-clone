@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate, useLocation, useSearchParams } from 'react-router-dom'
+import Select from 'react-select'
 import { filterByPrice, getProducts } from '../redux/features/productSlice'
 import { addToCart } from '../redux/features/cartSlice'
 import Spinner from "../components/Spinner"
 import Pagination from './Pagination'
-import Select from 'react-select'
 
 const Products = () => {
     const { products, loading } = useSelector(state => state.productSlice)
     const { cart } = useSelector(state => state.cartSlice)
     const dispatch = useDispatch()
+    let location = useLocation();
+    const navigate = useNavigate()
+    const [searchParams, setSearchParams] = useSearchParams()
 
     const [pageNumber, setPageNumber] = useState(0);
     const usersPerPage = 8;
@@ -21,37 +24,41 @@ const Products = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' })
     };
 
+    const options = [
+        { value: 'standart', label: 'Standart sıralama' },
+        { value: 'asc', label: 'Ucuzdan bahaya' },
+        { value: 'desc', label: 'Bahadan ucuza' }
+    ]
+
+    const [value, setValue] = useState(options[0]);
+
+    function filterByPriceFunc(selected) {
+        if (selected.value === "asc") {
+            setSearchParams({ _sort: "price", _order: selected.value })
+        } else if (selected.value === "desc") {
+            setSearchParams({ _sort: "price", _order: selected.value })
+        }
+        else if (selected.value === "standart") {
+            navigate("/")
+        }
+    }
+
     useEffect(() => {
-        dispatch(getProducts())
-    }, [dispatch])
+        if (location.search === "?_sort=price&_order=asc") {
+            dispatch(filterByPrice(location.search))
+            setValue(options[1])
+        } else if (location.search === "?_sort=price&_order=desc") {
+            dispatch(filterByPrice(location.search))
+            setValue(options[2])
+        } else if (location.search === "") {
+            dispatch(getProducts())
+            setValue(options[0])
+        }
+    }, [location])
 
     useEffect(() => {
         localStorage.setItem("cartItems", JSON.stringify(cart))
     }, [cart])
-
-
-    const options = [
-        { value: 'standart', label: 'Standart sıralama' },
-        { value: 'inc-price', label: 'Ucuzdan bahaya' },
-        { value: 'dec-price', label: 'Bahadan ucuza' }
-    ]
-
-    const [value, setValue] = useState({
-        value: "standart",
-        label: "Standart sıralama"
-    });
-
-    function filterByPriceFunc(selected) {
-        setValue(selected)
-        if (selected.value == "inc-price") {
-            dispatch(filterByPrice("asc"))
-        } else if (selected.value == "dec-price") {
-            dispatch(filterByPrice("desc"))
-        }
-        else if (selected.value == "standart") {
-            dispatch(getProducts())
-        }
-    }
 
     if (loading) {
         return <Spinner />;

@@ -13,11 +13,11 @@ export const getProducts = createAsyncThunk(
   }
 );
 
-export const filterByPrice = createAsyncThunk(
-  "product/filterByPrice",
+export const getProduct = createAsyncThunk(
+  "product/getProduct",
   async (payload, { rejectWithValue }) => {
     try {
-      const response = await api.filterByPrice(payload);
+      const response = await api.getProduct(payload);
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response.data);
@@ -25,11 +25,11 @@ export const filterByPrice = createAsyncThunk(
   }
 );
 
-export const getProduct = createAsyncThunk(
-  "product/getProduct",
-  async (id, { rejectWithValue }) => {
+export const filterByPrice = createAsyncThunk(
+  "product/filterByPrice",
+  async (payload, { rejectWithValue }) => {
     try {
-      const response = await api.getProduct(id);
+      const response = await api.filterByPrice(payload);
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response.data);

@@ -3,9 +3,9 @@ import * as api from "../api";
 
 export const getProductBySearch = createAsyncThunk(
     "search/getProductBySearch",
-    async (value, { rejectWithValue }) => {
+    async (payload, { rejectWithValue }) => {
         try {
-            const response = await api.getProductBysearch(value);
+            const response = await api.getProductBysearch(payload);
             return response.data;
         } catch (err) {
             return rejectWithValue(err.response.data);

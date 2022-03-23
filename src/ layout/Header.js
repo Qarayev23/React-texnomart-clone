@@ -15,13 +15,14 @@ const Header = () => {
 
     function handleSearch(event) {
         setQuery(event.target.value)
+        if (query.length === 0) {
+            dispatch(clearProductBySearch())
+        }
     }
 
     useEffect(() => {
         if (query.length > 2) {
             dispatch(getProductBySearch(query))
-        } else if (query.length === 0) {
-            dispatch(clearProductBySearch())
         }
     }, [query])
 

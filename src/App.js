@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Basket from "./pages/Basket";
 import ProductDetail from "./pages/ProductDetail";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <Router>
         <Header />
         <Routes>
+        <Route path="*" element={<NotFound />} />
           <Route path="/" element={<Home />} />
           <Route path="/basket" element={<Basket />} />
           <Route path="/products/:id" element={<ProductDetail />} />
