@@ -36,6 +36,7 @@ const Header = () => {
     function directedFunc(id) {
         dispatch(clearProductBySearch())
         setQuery("")
+        console.log(id);
         return navigate(`/products/${id}`);
     }
 

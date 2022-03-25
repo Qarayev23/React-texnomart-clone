@@ -6,6 +6,7 @@ import { getProducts } from '../redux/features/productSlice'
 import Product from './Product'
 import Spinner from "../components/Spinner"
 import PaginationComp from './Pagination'
+import SideBar from './SideBar'
 
 const Products = () => {
     const { products, productCount, loading } = useSelector(state => state.productSlice)
@@ -64,6 +65,12 @@ const Products = () => {
         localStorage.setItem("cartItems", JSON.stringify(cart))
     }, [cart])
 
+    const [openSidebar, setOpenSidebar] = useState(true)
+    const handleSidebar = () => {
+        document.querySelector(".backdrop").classList.toggle("active")
+        setOpenSidebar(!openSidebar)
+    }
+
     if (loading) {
         return <Spinner />;
     }
@@ -71,27 +78,38 @@ const Products = () => {
     return (
         <section className="products">
             <div className="container">
-                <div className="products-content">
-                    <div className="filter-section">
-                        <div className="products-found">
-                            {productCount}&nbsp;nəticədən &nbsp;{(currentPage * limit) - limit}&nbsp;-&nbsp;
-                            {(currentPage * limit) - limit + products.length} &nbsp;Məhsul tapıldı
-                        </div>
-                        <div className='price-filter'>
-                            <Select
-                                value={value}
-                                options={options}
-                                onChange={filterByPriceFunc}
-                                isSearchable={false} />
-                        </div>
+                <div className='wrapper'>
+                    <div className='products-left'>
+                        <SideBar openSidebar={openSidebar} handleSidebar={handleSidebar} />
                     </div>
-                    <div className="products-list">
-                        {products.map((product) => {
-                            return <Product product={product} key={product.id} />
-                        })}
+                    <div className='products-right'>
+                        <div className="products-content">
+                            <div className="products-content-top">
+                                <div className="products-found">
+                                    {productCount}&nbsp;nəticədən &nbsp;{(currentPage * limit) - limit}&nbsp;-&nbsp;
+                                    {(currentPage * limit) - limit + products.length} &nbsp;Məhsul tapıldı
+                                </div>
+                                <div className='price-filter'>
+                                    <Select
+                                        value={value}
+                                        options={options}
+                                        onChange={filterByPriceFunc}
+                                        isSearchable={false} />
+                                    <button class="open-sidebar" onClick={handleSidebar}>
+                                        <i class="fa fa-filter" aria-hidden="true"></i>
+                                        Filter
+                                    </button>
+                                </div>
+                            </div>
+                            <div className="products-list">
+                                {products.map((product) => {
+                                    return <Product product={product} key={product.id} />
+                                })}
+                            </div>
+                        </div>
+                        <PaginationComp changePage={changePage} productCount={productCount} currentPage={currentPage} />
                     </div>
                 </div>
-                <PaginationComp changePage={changePage} productCount={productCount} currentPage={currentPage} />
             </div>
         </section>
     )

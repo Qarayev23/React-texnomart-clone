@@ -14,8 +14,8 @@ const ProductDetail = () => {
     dispatch(getProduct(id))
     setTimeout(() => {
       activeRef.current.click()
-    }, 500);
-  }, [dispatch])
+    }, 1000);
+  }, [id])
 
   const [monthlyPayment, setMonthlyPayment] = useState(0)
   const [active, setActive] = useState("");
