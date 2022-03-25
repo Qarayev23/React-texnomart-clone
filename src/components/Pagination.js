@@ -1,19 +1,14 @@
 import React from 'react'
-import ReactPaginate from "react-paginate";
+import Pagination from 'rc-pagination';
 
-const Pagination = ({changePage, pageCount}) => {
-    return (
-        <ReactPaginate
-            previousLabel={"<"}
-            nextLabel={">"}
-            pageCount={pageCount}
-            onPageChange={changePage}
-            containerClassName={"page-numbers"}
-            previousLinkClassName={"prev"}
-            nextLinkClassName={"next"}
-            activeClassName={"active"}
-        />
+const PaginationComp = ({changePage, productCount, currentPage}) => {
+    return ( 
+        <Pagination
+        onChange={changePage}
+        current={currentPage}
+        total={productCount}
+      />
     )
 }
 
-export default Pagination
+export default PaginationComp

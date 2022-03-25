@@ -1,26 +1,27 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Link, useNavigate, useLocation, useSearchParams } from 'react-router-dom'
+import { useLocation, useSearchParams } from 'react-router-dom'
 import Select from 'react-select'
-import { filterByPrice, getProducts } from '../redux/features/productSlice'
-import { addToCart } from '../redux/features/cartSlice'
+import { getProducts } from '../redux/features/productSlice'
+import Product from './Product'
 import Spinner from "../components/Spinner"
-import Pagination from './Pagination'
+import PaginationComp from './Pagination'
 
 const Products = () => {
-    const { products, loading } = useSelector(state => state.productSlice)
+    const { products, productCount, loading } = useSelector(state => state.productSlice)
     const { cart } = useSelector(state => state.cartSlice)
     const dispatch = useDispatch()
     let location = useLocation();
-    const navigate = useNavigate()
     const [searchParams, setSearchParams] = useSearchParams()
 
-    const [pageNumber, setPageNumber] = useState(0);
-    const usersPerPage = 8;
-    const pagesVisited = pageNumber * usersPerPage;
-    const pageCount = Math.ceil(products.length / usersPerPage);
-    const changePage = ({ selected }) => {
-        setPageNumber(selected);
+    const limit = 8;
+    const [currentPage, setCurrentPage] = useState(1)
+
+    const changePage = (selected) => {
+        setCurrentPage(selected)
+        searchParams.set("_page", selected)
+        searchParams.set("_limit", limit)
+        setSearchParams(searchParams)
         window.scrollTo({ top: 0, behavior: 'smooth' })
     };
 
@@ -30,29 +31,32 @@ const Products = () => {
         { value: 'desc', label: 'Bahadan ucuza' }
     ]
 
-    const [value, setValue] = useState(options[0]);
+    const [value, setValue] = useState(null);
 
     function filterByPriceFunc(selected) {
-        if (selected.value === "asc") {
-            setSearchParams({ _sort: "price", _order: selected.value })
-        } else if (selected.value === "desc") {
-            setSearchParams({ _sort: "price", _order: selected.value })
-        }
-        else if (selected.value === "standart") {
-            navigate("/")
-        }
+        searchParams.set("_order", selected.value)
+        searchParams.set("_sort", "price")
+        searchParams.set("_page", 1)
+        searchParams.set("_limit", limit)
+        setSearchParams(searchParams)
+        setValue(selected)
+        setCurrentPage(1)
     }
 
     useEffect(() => {
-        if (location.search === "?_sort=price&_order=asc") {
-            dispatch(filterByPrice(location.search))
-            setValue(options[1])
-        } else if (location.search === "?_sort=price&_order=desc") {
-            dispatch(filterByPrice(location.search))
-            setValue(options[2])
-        } else if (location.search === "") {
-            dispatch(getProducts())
+        searchParams.get("_page") && setCurrentPage(Number(searchParams.get("_page")))
+        if (location.search === "") {
+            dispatch(getProducts(`?_page=1&_limit=${limit}`))
+            setCurrentPage(1)
             setValue(options[0])
+        } else if (searchParams.get("_order") === "asc") {
+            dispatch(getProducts(location.search))
+            setValue(options[1])
+        } else if (searchParams.get("_order") === "desc") {
+            dispatch(getProducts(location.search))
+            setValue(options[2])
+        } else {
+            dispatch(getProducts(location.search))
         }
     }, [location])
 
@@ -70,42 +74,24 @@ const Products = () => {
                 <div className="products-content">
                     <div className="filter-section">
                         <div className="products-found">
-                            {products.length}&nbsp;nəticədən &nbsp;{pagesVisited}&nbsp;-&nbsp;
-                            {pagesVisited + products.slice(pagesVisited, pagesVisited + usersPerPage).length}
-                            &nbsp;Məhsul tapıldı
+                            {productCount}&nbsp;nəticədən &nbsp;{(currentPage * limit) - limit}&nbsp;-&nbsp;
+                            {(currentPage * limit) - limit + products.length} &nbsp;Məhsul tapıldı
                         </div>
                         <div className='price-filter'>
                             <Select
                                 value={value}
                                 options={options}
-                                onChange={filterByPriceFunc} />
+                                onChange={filterByPriceFunc}
+                                isSearchable={false} />
                         </div>
                     </div>
                     <div className="products-list">
-                        {products.slice(pagesVisited, pagesVisited + usersPerPage).map((product) => {
-                            return (
-                                <div className="product" key={product.id}>
-                                    <Link to={`/products/${product.id}`} className="product-img">
-                                        <img src={product.img} alt="" />
-                                    </Link>
-                                    <Link to={`/products/${product.id}`} className="product-name">{product.name}</Link>
-                                    <div className="product-footer">
-                                        <div className="product-price">
-                                            <span className="small">Qiymət</span>
-                                            <b>{product.price}$</b>
-                                        </div>
-                                        <div className="product-payment">
-                                            <span className="small">Hissə-hissə ödəniş</span>
-                                            <span>12ay <b>{(product.price / 12).toFixed(2)}$</b></span>
-                                        </div>
-                                    </div>
-                                    <button onClick={() => dispatch(addToCart(product))}>Səbətə at</button>
-                                </div>
-                            )
+                        {products.map((product) => {
+                            return <Product product={product} key={product.id} />
                         })}
                     </div>
                 </div>
-                <Pagination changePage={changePage} pageCount={pageCount} />
+                <PaginationComp changePage={changePage} productCount={productCount} currentPage={currentPage} />
             </div>
         </section>
     )
