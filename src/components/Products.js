@@ -84,9 +84,9 @@ const Products = () => {
                     </div>
                     <div className='products-right'>
                         <div className="products-content">
-                            {products.length > 0 ?
-                                <>
-                                    <div className="products-content-top">
+                            <div className="products-content-top">
+                                {products.length > 0 ?
+                                    <>
                                         <div className="products-found">
                                             {productCount}&nbsp;nəticədən &nbsp;{(currentPage * limit) - limit}&nbsp;-&nbsp;
                                             {(currentPage * limit) - limit + products.length} &nbsp;Məhsul tapıldı
@@ -102,19 +102,22 @@ const Products = () => {
                                                 Filter
                                             </button>
                                         </div>
+                                    </> :
+                                    <div className="products-not-found">
+                                        Seçiminizə uyğun məhsul tapılmadı.
+                                        <button className="open-sidebar" onClick={handleSidebar}>
+                                            <i className="fa fa-filter" aria-hidden="true"></i>
+                                            Filter
+                                        </button>
                                     </div>
-                                    <div className="products-list">
-                                        {products.map((product) => {
-                                            return <Product product={product} key={product.id} />
-                                        })}
-                                    </div>
-                                    <PaginationComp changePage={changePage} productCount={productCount} currentPage={currentPage} limit={limit} />
-                                </> :
-                                <div className="products-content-top not-found">
-                                    Seçiminizə uyğun məhsul tapılmadı.
-                                </div>
-                            }
-
+                                }
+                            </div>
+                            <div className="products-list">
+                                {products.map((product) => {
+                                    return <Product product={product} key={product.id} />
+                                })}
+                            </div>
+                          {products.length > 0 &&  <PaginationComp changePage={changePage} productCount={productCount} currentPage={currentPage} limit={limit} />} 
                         </div>
                     </div>
                 </div>

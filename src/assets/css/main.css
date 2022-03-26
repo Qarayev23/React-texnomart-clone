@@ -451,6 +451,7 @@ header {
 .sidebar {
   background-color: var(--light-gray);
   width: 275px;
+  overflow: auto;
 }
 
 .sidebar-inner {
@@ -538,12 +539,12 @@ header {
   margin-bottom: 40px;
 }
 
-.products-content-top.not-found {
-  justify-content: center;
-  padding: 20px 0;
+.products-not-found {
   color: var(--dark-red);
   font-weight: bold;
   font-size: 18px;
+  width: 100%;
+  padding: 10px 0;
 }
 
 .products-found {
@@ -722,9 +723,12 @@ header {
     gap: 20px;
   }
 
-  .products-content-top.not-found {
+  .products-not-found {
     font-size: 16px;
-    align-items: center;
+  }
+
+  .products-not-found .open-sidebar{
+    margin-top: 20px;
   }
 
   .price-filter {

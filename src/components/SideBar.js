@@ -24,7 +24,7 @@ const SideBar = ({ handleSidebar, openSidebar, limit }) => {
         const [param, value] = entry;
         keys.push(param)
 
-        document.querySelectorAll(".nese").forEach((item, i) => {
+        document.querySelectorAll(".check-box").forEach((item, i) => {
           if (item.name === param && item.value === value) {
             item.checked = true
           }
@@ -73,7 +73,7 @@ const SideBar = ({ handleSidebar, openSidebar, limit }) => {
           <ul className='filter-list'>
             <li className='filter-item'>
               <label>Samsung</label>
-              <input type='checkbox' className='nese'
+              <input type='checkbox' className='check-box'
                 name='brand'
                 value="samsung"
                 onChange={filterProducts}
@@ -82,7 +82,7 @@ const SideBar = ({ handleSidebar, openSidebar, limit }) => {
             <li className='filter-item'>
               <label>Xiaomi</label>
               <input type='checkbox'
-                className='nese'
+                className='check-box'
                 name='brand'
                 value="xiaomi"
                 onChange={filterProducts} />
@@ -97,7 +97,7 @@ const SideBar = ({ handleSidebar, openSidebar, limit }) => {
             <li className='filter-item'>
               <label>8 GB</label>
               <input type='checkbox'
-                className='nese'
+                className='check-box'
                 name='memory'
                 value="8"
                 onChange={filterProducts} />
@@ -105,7 +105,7 @@ const SideBar = ({ handleSidebar, openSidebar, limit }) => {
             <li className='filter-item'>
               <label>16 GB</label>
               <input type='checkbox'
-                className='nese'
+                className='check-box'
                 name='memory'
                 value="16"
                 onChange={filterProducts} />
@@ -113,7 +113,7 @@ const SideBar = ({ handleSidebar, openSidebar, limit }) => {
             <li className='filter-item'>
               <label>32 GB</label>
               <input type='checkbox'
-                className='nese'
+                className='check-box'
                 name='memory'
                 value="32"
                 onChange={filterProducts} />
@@ -121,7 +121,7 @@ const SideBar = ({ handleSidebar, openSidebar, limit }) => {
             <li className='filter-item'>
               <label>64 GB</label>
               <input type='checkbox'
-                className='nese'
+                className='check-box'
                 name='memory'
                 value="64"
                 onChange={filterProducts} />
@@ -129,7 +129,7 @@ const SideBar = ({ handleSidebar, openSidebar, limit }) => {
             <li className='filter-item'>
               <label>128 GB</label>
               <input type='checkbox'
-                className='nese'
+                className='check-box'
                 name='memory'
                 value="128"
                 onChange={filterProducts} />
@@ -137,7 +137,7 @@ const SideBar = ({ handleSidebar, openSidebar, limit }) => {
             <li className='filter-item'>
               <label>256 GB</label>
               <input type='checkbox'
-                className='nese'
+                className='check-box'
                 name='memory'
                 value="256"
                 onChange={filterProducts} />
@@ -151,7 +151,7 @@ const SideBar = ({ handleSidebar, openSidebar, limit }) => {
             <li className='filter-item'>
               <label>1.5 GB</label>
               <input type='checkbox'
-                className='nese'
+                className='check-box'
                 name='ram'
                 value="1.5"
                 onChange={filterProducts} />
@@ -159,7 +159,7 @@ const SideBar = ({ handleSidebar, openSidebar, limit }) => {
             <li className='filter-item'>
               <label>3 GB</label>
               <input type='checkbox'
-                className='nese'
+                className='check-box'
                 name='ram'
                 value="3"
                 onChange={filterProducts} />
@@ -167,7 +167,7 @@ const SideBar = ({ handleSidebar, openSidebar, limit }) => {
             <li className='filter-item'>
               <label>4 GB</label>
               <input type='checkbox'
-                className='nese'
+                className='check-box'
                 name='ram'
                 value="4"
                 onChange={filterProducts} />
@@ -175,7 +175,7 @@ const SideBar = ({ handleSidebar, openSidebar, limit }) => {
             <li className='filter-item'>
               <label>8 GB</label>
               <input type='checkbox'
-                className='nese'
+                className='check-box'
                 name='ram'
                 value="8"
                 onChange={filterProducts} />
