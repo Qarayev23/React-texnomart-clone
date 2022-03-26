@@ -55,7 +55,7 @@ const Basket = () => {
                                             <img src={item.img} alt="" />
                                         </div>
                                         <div className="cart-name">
-                                            <p>{item.name}</p>
+                                            <Link to={`/products/${item.id}`}>{item.name}</Link>
                                         </div>
                                     </div>
                                     <div className="cart-item-right">
@@ -77,7 +77,7 @@ const Basket = () => {
                                             <span>{amount}$</span>
                                         </div>
                                         <div className="cart-remove">
-                                            <button onClick={() => dispatch(remove(item.id))}><i class="fas fa-trash-alt"></i></button>
+                                            <button onClick={() => dispatch(remove(item.id))}><i className="fas fa-trash-alt"></i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -86,7 +86,7 @@ const Basket = () => {
                     </div>
                     <div className="cart-footer">
                         <Link to="/" className="go-to-store">
-                            <i class="fas fa-long-arrow-alt-left"></i>
+                            <i className="fas fa-long-arrow-alt-left"></i>
                                     Mağazaya keç
                         </Link>
                         {cart.length > 0 ?

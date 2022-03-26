@@ -50,7 +50,7 @@ const ProductDetail = () => {
               <div className='product-detail-calc'>
                 <span className='product-detail-calc-title'>Kredit kalkulyatoru</span>
                 <span className='product-detail-calc-text'>Aylıq ödəniş:&nbsp;{monthlyPayment}&nbsp;$</span>
-                <div class="calc-list-inner-class">
+                <div className="calc-list-inner-class">
                   <button onClick={(e) => monthlyPaymentFunc(e, product.price, 1)}
                     className={active === 1 ? "month active" : "month"}
                     data-value="6"

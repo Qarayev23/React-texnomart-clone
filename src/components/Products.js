@@ -32,7 +32,7 @@ const Products = () => {
         { value: 'desc', label: 'Bahadan ucuza' }
     ]
 
-    const [value, setValue] = useState(null);
+    const [value, setValue] = useState(options[0]);
 
     function filterByPriceFunc(selected) {
         searchParams.set("_order", selected.value)
@@ -80,34 +80,42 @@ const Products = () => {
             <div className="container">
                 <div className='wrapper'>
                     <div className='products-left'>
-                        <SideBar openSidebar={openSidebar} handleSidebar={handleSidebar} />
+                        <SideBar openSidebar={openSidebar} handleSidebar={handleSidebar} currentPage={currentPage} limit={limit} setCurrentPage={setCurrentPage} />
                     </div>
                     <div className='products-right'>
                         <div className="products-content">
-                            <div className="products-content-top">
-                                <div className="products-found">
-                                    {productCount}&nbsp;nəticədən &nbsp;{(currentPage * limit) - limit}&nbsp;-&nbsp;
-                                    {(currentPage * limit) - limit + products.length} &nbsp;Məhsul tapıldı
+                            {products.length > 0 ?
+                                <>
+                                    <div className="products-content-top">
+                                        <div className="products-found">
+                                            {productCount}&nbsp;nəticədən &nbsp;{(currentPage * limit) - limit}&nbsp;-&nbsp;
+                                            {(currentPage * limit) - limit + products.length} &nbsp;Məhsul tapıldı
+                                        </div>
+                                        <div className='price-filter'>
+                                            <Select
+                                                value={value}
+                                                options={options}
+                                                onChange={filterByPriceFunc}
+                                                isSearchable={false} />
+                                            <button className="open-sidebar" onClick={handleSidebar}>
+                                                <i className="fa fa-filter" aria-hidden="true"></i>
+                                                Filter
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div className="products-list">
+                                        {products.map((product) => {
+                                            return <Product product={product} key={product.id} />
+                                        })}
+                                    </div>
+                                    <PaginationComp changePage={changePage} productCount={productCount} currentPage={currentPage} limit={limit} />
+                                </> :
+                                <div className="products-content-top not-found">
+                                    Seçiminizə uyğun məhsul tapılmadı.
                                 </div>
-                                <div className='price-filter'>
-                                    <Select
-                                        value={value}
-                                        options={options}
-                                        onChange={filterByPriceFunc}
-                                        isSearchable={false} />
-                                    <button class="open-sidebar" onClick={handleSidebar}>
-                                        <i class="fa fa-filter" aria-hidden="true"></i>
-                                        Filter
-                                    </button>
-                                </div>
-                            </div>
-                            <div className="products-list">
-                                {products.map((product) => {
-                                    return <Product product={product} key={product.id} />
-                                })}
-                            </div>
+                            }
+
                         </div>
-                        <PaginationComp changePage={changePage} productCount={productCount} currentPage={currentPage} />
                     </div>
                 </div>
             </div>

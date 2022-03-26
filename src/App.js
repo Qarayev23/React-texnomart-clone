@@ -13,10 +13,10 @@ function App() {
       <Router>
         <Header />
         <Routes>
-        <Route path="*" element={<NotFound />} />
+          <Route path="*" element={<NotFound />} />
           <Route path="/" element={<Home />} />
           <Route path="/basket" element={<Basket />} />
-          <Route path="/products/:id" element={<ProductDetail />} />
+            <Route path="/products/:id" element={<ProductDetail />} />
         </Routes>
         <Footer />
       </Router >
