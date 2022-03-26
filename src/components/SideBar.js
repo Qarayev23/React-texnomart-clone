@@ -19,7 +19,6 @@ const SideBar = ({ handleSidebar, openSidebar, limit }) => {
   }
 
   useEffect(() => {
-    document.querySelectorAll(".nese").forEach((item, i) => {
       let keys = []
       for (const entry of searchParams.entries()) {
         const [param, value] = entry;
@@ -31,7 +30,6 @@ const SideBar = ({ handleSidebar, openSidebar, limit }) => {
           }
         })
       }
-    })
   }, [])
 
   // const minPrice = 0
